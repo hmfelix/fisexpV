@@ -65,7 +65,7 @@ def gerar_df_media_descontando_ruido(lista_dfs, ruido):
 
 def gerar_df_media_total(cor):
     ruido = escolher_ruido(cor)
-    intensidades = ['20%', '40%', '60%', '80%', '100%']
+    intensidades = ['020%', '040%', '060%', '080%', '100%']
     indices_iniciais = list(range(0,41,10))
     indices_finais = list(range(10,51,10))
     for i in range(0,5):
