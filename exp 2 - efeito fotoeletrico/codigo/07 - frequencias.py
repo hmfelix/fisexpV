@@ -115,7 +115,8 @@ def plotar_e_tabelar(cor, baixo, cima, anotacao, modo='m', chutes=chutar(cor)):
     #plt.title('A', fontsize=30)
     plt.ylabel('$N$ [mil]', fontsize=28)
     plt.xlabel('$f$ [$\\times 10^{14}$ Hz]', fontsize=28)
-    plt.xticks(fontsize=25)
+    ticks = [i.round(2) for i in np.arange(baixo,cima, (cima-baixo)/5) + (cima-baixo)/10 ]
+    plt.xticks(ticks, fontsize=25)
     plt.xlim(baixo, cima)
     plt.yticks(fontsize=25)
     plt.tight_layout(pad=0.1)
