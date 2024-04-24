@@ -61,25 +61,3 @@ pd.merge(metodo_1_sem_ruido, metodo_1_com_ruido, on='Cor', suffixes=(' sem ruido
 
 
 
-
-arquivos_a_calcular_V0_metodo_1 = [arq for arq in arquivos_a_plotar if not 'Ruido' in arq]
-df_interpolacao = pd.DataFrame(columns=['LED', 'Intensidade', 'V0 M1'])
-for arquivo in arquivos_a_calcular_V0_metodo_1:
-    # vamos ler a partir da linha 50 porque alguns gráficos
-    # cruzam de corrente positiva para corrente negativa antes disso,
-    # depois voltam a cruzar para a positiva
-    df = pd.read_csv('Medias de cada intensidade/' + arquivo).iloc[50:,]
-    # vamos inverter o gráfico!
-    y = df['Tensao (V)']
-    x = df['Corrente media (A)']
-    # ponto em que queremos interpolar:
-    x_a_interpolar = 0
-    # resultado da interpolação:
-    y_interpolado = np.interp(x_a_interpolar, x, y)
-    led = arquivo.split('_')[0]
-    intensidade = arquivo.split('_')[1].replace('.csv','')
-    linha_resultado = pd.DataFrame({'LED': [led], 'Intensidade': [intensidade], 'V0 M1': [y_interpolado]})
-    df_interpolacao = pd.concat([df_interpolacao, linha_resultado])
-
-# salvando
-df_interpolacao.to_csv('Metodos/Metodo 1/todas.csv', index=False)

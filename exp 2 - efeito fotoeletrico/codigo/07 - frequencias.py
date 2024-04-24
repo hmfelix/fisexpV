@@ -76,7 +76,7 @@ def atribuir_cor(cor):
         resultado = 'red'
     return resultado
 
-def plotar_e_tabelar(cor, baixo, cima, modo='m', chutes=chutar(cor)):
+def plotar_e_tabelar(cor, baixo, cima, anotacao, modo='m', chutes=chutar(cor)):
     # modos: 'm' para mostrar, 's' para salvar
     dados = filtrar(globals()['df_{}'.format(cor)], baixo, cima)
     ajuste = ajustar_gaussiana_assimetrica(dados, chutar(cor))
@@ -101,31 +101,39 @@ def plotar_e_tabelar(cor, baixo, cima, modo='m', chutes=chutar(cor)):
         x,
         gaussiana_assimetrica(ajuste.beta, x),
         color = atribuir_cor(cor),
-        linewidth=4,
+        linewidth=6,
         zorder = 3 # ordena que seja plotado segundo!
     )
+    plt.annotate(
+        anotacao,
+        xy=(0.002, .985),
+        xycoords='axes fraction', # torna coordenadas xy normalizadas
+        verticalalignment='top',
+        fontsize=30,
+        bbox=dict(boxstyle='square,pad=0.01', facecolor='white', alpha=0.85, edgecolor='none') # caixa de texto
+    )
     #plt.title('A', fontsize=30)
-    plt.ylabel('N [mil]', fontsize=23)
-    plt.xlabel('$\\nu$ [$\\times 10^{14}$ Hz]', fontsize=23)
-    plt.xticks(fontsize=20)
+    plt.ylabel('$N$ [mil]', fontsize=28)
+    plt.xlabel('$f$ [$\\times 10^{14}$ Hz]', fontsize=28)
+    plt.xticks(fontsize=25)
     plt.xlim(baixo, cima)
-    plt.yticks(fontsize=20)
+    plt.yticks(fontsize=25)
     plt.tight_layout(pad=0.1)
     if modo == 'm':
         plt.show()
     elif modo == 's':
-        plt.savefig('analise de frequencias/graficos/' + cor + '.svg', format='svg')
+        plt.savefig('analise de frequencias/graficos/Assimetrica_' + cor + '.svg', format='svg')
         plt.close()
 
 
 
 # PLOTS
 
-plotar_e_tabelar('Vm', 4.5, 5.5, modo='s')
-plotar_e_tabelar('Vd', 5, 6.3, modo='s')
-plotar_e_tabelar('Viol', 6.5, 8, modo='s')
-plotar_e_tabelar('Am', 4.8, 5.4, modo='s')
-plotar_e_tabelar('Az', 5.9, 6.8, modo='s')
+plotar_e_tabelar('Vm', 4.5, 5.5, anotacao='(a)', modo='s')
+plotar_e_tabelar('Am', 4.8, 5.4, anotacao='(b)',  modo='s')
+plotar_e_tabelar('Vd', 5, 6.3, anotacao='(c)', modo='s')
+plotar_e_tabelar('Az', 5.9, 6.8, anotacao='(d)', modo='s')
+plotar_e_tabelar('Viol', 6.5, 8, anotacao='(e)', modo='s')
 
 
 
