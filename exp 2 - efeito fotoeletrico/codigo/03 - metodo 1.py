@@ -160,7 +160,7 @@ def plotar_V0_metodo_1(cor, anotacao, potencia=3, cols_leg=1, descontos_x=(0.5,0
         columnspacing=0.15, # espaçamento entre colunas
         borderpad=0.2, # padding do texto entre a caixa e a borda
     )
-    plt.ylabel('$I$ [$10^{{-{}}}$ A]'.format(potencia), fontsize=28)
+    plt.ylabel('Corrente [$10^{{-{}}}$ A]'.format(potencia), fontsize=28)
     plt.xlabel('$V$ [V]', fontsize=28)
     ticks = [i.round(2) for i in np.arange(baixo,cima, (cima-baixo)/5) + (cima-baixo)/10 ]
     plt.xticks(ticks, fontsize=25)
@@ -178,9 +178,9 @@ def plotar_V0_metodo_1(cor, anotacao, potencia=3, cols_leg=1, descontos_x=(0.5,0
 
 
 
-plotar_V0_metodo_1('Vermelho', '(b)', potencia=5,cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.6,1.2), modo='m')
+plotar_V0_metodo_1('Vermelho', '(b)', potencia=5,cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.6,1.2), modo='s')
 plotar_V0_metodo_1('Amarelo', '(c)', potencia=5,cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.8,1.2), modo='s')
-plotar_V0_metodo_1('Verde', '(d)', potencia=4,cols_leg=2, descontos_x=(0.2,0.122), mult_y=(0.85,1.2), modo='m')
+plotar_V0_metodo_1('Verde', '(d)', potencia=4,cols_leg=2, descontos_x=(0.2,0.122), mult_y=(0.85,1.2), modo='s')
 plotar_V0_metodo_1('Azul', '(e)', potencia=3,cols_leg=2, descontos_x=(0.2,0.13), mult_y=(1,1), modo='s')
 plotar_V0_metodo_1('Violeta', '(f)', potencia=5,cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.3,1.5), modo='s')
 
