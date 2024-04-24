@@ -116,7 +116,7 @@ def plotar_V0_metodo_3(cor, anotacao, v0=(-1,0), potencia=3, cols_leg=1, x_lims=
 
 
 plotar_V0_metodo_3('Vermelho', '(b)', v0=(-.4,68), potencia=6, cols_leg=2, x_lims=(-0.7,-0.3), mult_y=(0.3,.05), modo='s')
-plotar_V0_metodo_3('Amarelo', '(c)', v0=(-.5,12), potencia=5,cols_leg=2, x_lims=(-.8,-.4), mult_y=(0.8,0.1), modo='s')
+plotar_V0_metodo_3('Amarelo', '(c)', v0=(-.55,6), potencia=5,cols_leg=2, x_lims=(-.8,-.4), mult_y=(0.8,0.1), modo='s')
 plotar_V0_metodo_3('Verde', '(d)', v0=(-1.1,0.2), potencia=4,cols_leg=2, x_lims=(-1.3,-0.9), mult_y=(1,.3), modo='s')
 plotar_V0_metodo_3('Azul', '(e)', v0=(-1.05,0.3), potencia=3,cols_leg=2, x_lims=(-1.3,-0.9), mult_y=(1,.3), modo='s')
 plotar_V0_metodo_3('Violeta', '(f)', v0=(-1.7,5), potencia=5,cols_leg=2, x_lims=(-2,-1.6), mult_y=(0.3,0.5), modo='s')
@@ -127,8 +127,8 @@ plotar_V0_metodo_3('Violeta', '(f)', v0=(-1.7,5), potencia=5,cols_leg=2, x_lims=
 
 valores_metodo_3 = pd.DataFrame({
     'LED': ['Vermelho', 'Amarelo', 'Verde', 'Azul', 'Violeta'],
-    'Valores': ['-0.4', '-0.5', '-1.1', '-1.05', '-1.7']
+    'Valores': ['-0.4', '-0.55', '-1.1', '-1.05', '-1.7']
 })
-valores_metodo_3.to_csv('metodos v0/metodo 3/todas.csv', index=False)
+valores_metodo_3.to_csv('metodos v0/metodo 3/cores.csv', index=False)
 
 # ok

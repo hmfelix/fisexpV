@@ -53,7 +53,7 @@ def calcula_V0_metodo_1(modo='s'):
 metodo_1_sem_ruido = calcula_V0_metodo_1('s')
 metodo_1_com_ruido = calcula_V0_metodo_1('r')
 
-pd.merge(metodo_1_sem_ruido, metodo_1_com_ruido, on='Cor', suffixes=(' sem ruido', ' com ruido')).to_csv('metodos v0/metodo 1/todas.csv', index=False)
+pd.merge(metodo_1_sem_ruido, metodo_1_com_ruido, on='Cor', suffixes=(' sem ruido', ' com ruido')).to_csv('metodos v0/metodo 1/cores.csv', index=False)
 
 
 
@@ -103,7 +103,7 @@ def plotar_V0_metodo_1(cor, anotacao, potencia=3, cols_leg=1, descontos_x=(0.5,0
             color = pegar_coloracao(intensidades[i]), # cor dos pontos
             fmt = 'o', # necessario especificar esse argumento para que os pontos sejam plotados
             markersize = 7, # tamanho dos pontos
-            zorder = 2 # ordena que seja plotado primeiro!
+            zorder = 2 # ordem de plotagem!
         )
         plt.plot(
             x,
@@ -179,9 +179,9 @@ def plotar_V0_metodo_1(cor, anotacao, potencia=3, cols_leg=1, descontos_x=(0.5,0
 
 
 plotar_V0_metodo_1('Vermelho', '(b)', potencia=5, cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.6,1.2), modo='s')
-plotar_V0_metodo_1('Amarelo', '(c)', potencia=5, cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.8,1.2), modo='s')
-plotar_V0_metodo_1('Verde', '(d)', potencia=4, cols_leg=2, descontos_x=(0.2,0.122), mult_y=(0.85,1.2), modo='s')
-plotar_V0_metodo_1('Azul', '(e)', potencia=3, cols_leg=2, descontos_x=(0.2,0.13), mult_y=(1,1), modo='s')
-plotar_V0_metodo_1('Violeta', '(f)', potencia=5, cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.3,1.5), modo='s')
+plotar_V0_metodo_1('Amarelo', '(a)', potencia=5, cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.8,1.2), modo='s')
+plotar_V0_metodo_1('Verde', '(b)', potencia=4, cols_leg=2, descontos_x=(0.2,0.122), mult_y=(0.85,1.2), modo='s')
+plotar_V0_metodo_1('Azul', '(c)', potencia=3, cols_leg=2, descontos_x=(0.2,0.13), mult_y=(1,1), modo='s')
+plotar_V0_metodo_1('Violeta', '(d)', potencia=5, cols_leg=2, descontos_x=(0.2,0.1), mult_y=(0.3,1.5), modo='s')
 
 # ok
