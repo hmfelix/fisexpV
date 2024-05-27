@@ -123,16 +123,14 @@ for count, i in enumerate([0,3,6]):
         dados_temporario = dados_d1[chaves[i+j]]
         # pontos
         if j == 0:
-            label = "0.5V"
+            label = "$V_r =$ 0.5V"
         elif j == 1:
-            label = "1.5V"
+            label = "$V_r =$ 1.5V"
         else:
-            label = "2.5V"
+            label = "$V_r =$ 2.5V"
         x = dados_temporario.iloc[:,0]
         y = dados_temporario.iloc[:,1]
         ax.scatter(x, y, s=6, label=label)
-        if count == 2:
-            ax.legend(fontsize=12, markerscale=2, borderpad=0.3, framealpha=0.95)
         # picos (metodo 1)
         pontos_metodo1_x = [ponto for ponto in picos_metodo1[chaves[i+j]]]
         linhas_metodo1 = [min(dados_temporario.iloc[:,0], key=lambda x:abs(ponto-x)) for ponto in pontos_metodo1_x]
@@ -141,15 +139,21 @@ for count, i in enumerate([0,3,6]):
         pontos_metodo1_y.columns = ['a', 'b', 'c']
         pontos_metodo1_y = pontos_metodo1_y.drop_duplicates(subset='a')
         pontos_metodo1_y = pontos_metodo1_y.iloc[:,1]
-        ax.scatter(pontos_metodo1_x, pontos_metodo1_y, marker='+', color='darkviolet', s=200)
+        if (i+j == 8):
+            ax.scatter(pontos_metodo1_x, pontos_metodo1_y, marker='+', color='darkviolet', s=200, label="Picos Método 1")
+        else:
+            ax.scatter(pontos_metodo1_x, pontos_metodo1_y, marker='+', color='darkviolet', s=200)
+        if count == 2:
+            ax.legend(fontsize=12, markerscale=1, borderpad=0.3, framealpha=0.95)
         # gaussianas (metodo 2)
         for k in range(len(picos_metodo2[chaves[i+j]])):
             pico = picos_metodo2[chaves[i+j]][k]
             escopo_de_plot = dados_temporario[(dados_temporario.iloc[:,0] > pico - 2.5) & (dados_temporario.iloc[:,0] < pico + 2.5)].iloc[:,0]
             betas = lista_ajustes_gaussianos[i+j][k][0]
-            ax.plot(escopo_de_plot, auxiliar.gaussiana(betas, escopo_de_plot), color="black", linewidth=1)
+            ax.plot(escopo_de_plot, auxiliar.gaussiana(betas, escopo_de_plot), color="black", linewidth=1)   
 fig.subplots_adjust(left=0.1, right=0.99, bottom=0.13, top=0.92, wspace=0, hspace=0)
-plt.show()
+#plt.show()
+plt.savefig("sintese/resultados-dia1.svg", format="svg")
 
 ## ajuste linear metodo 2
 
