@@ -169,9 +169,27 @@ for i in range(len(lista_dados)):
 lista_ajustes_lineares = [auxiliar.encaixar_linear(df) for df in lista_dados]
 
 # resultados
+u_exc_metodo2_lin = [lista_ajustes_lineares[i][0][0] for i in range(len(lista_ajustes_lineares))]
+u_exc_erro_metodo2_lin = [lista_ajustes_lineares[i][1][0] for i in range(len(lista_ajustes_lineares))]
+u_cont_metodo2_lin = [lista_ajustes_lineares[i][0][1] for i in range(len(lista_ajustes_lineares))]
+u_cont_metodo2_erro_lin = [lista_ajustes_lineares[i][1][1] for i in range(len(lista_ajustes_lineares))]
+resultados_metodo2 = pd.DataFrame({
+    "U_exc_m2_lin": u_exc_metodo2_lin,
+    "U_exc_m2_erro_lin": u_exc_erro_metodo2_lin,
+    "U_cont_m2_lin": u_cont_metodo2_lin,
+    "U_cont_m2_erro_lin": u_cont_metodo2_erro_lin 
+})
+resultados_d1 = pd.concat([resultados_d1, resultados_metodo2], axis=1)
+
+
 
 # plot ajuste linear
 
+
+
+
+## salvando resultados
+resultados_d1.to_csv("sintese/resultados-dia1.csv", index=False)
 
 
 
