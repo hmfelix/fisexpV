@@ -140,6 +140,7 @@ for count, i in enumerate([0,3,6]):
         pontos_metodo1_y = pontos_metodo1_y.drop_duplicates(subset='a')
         pontos_metodo1_y = pontos_metodo1_y.iloc[:,1]
         if (i+j == 8):
+            ax.plot([1,2], [1,2], color="black", label="Gauss Método 2") # placeholder para aparecer legenda do método 2
             ax.scatter(pontos_metodo1_x, pontos_metodo1_y, marker='+', color='darkviolet', s=200, label="Picos Método 1")
         else:
             ax.scatter(pontos_metodo1_x, pontos_metodo1_y, marker='+', color='darkviolet', s=200)
@@ -185,9 +186,92 @@ resultados_metodo2 = pd.DataFrame({
 })
 resultados_d1 = pd.concat([resultados_d1, resultados_metodo2], axis=1)
 
-
-
 # plot ajuste linear
+fig, axs = plt.subplots(1,3,figsize=(9,5))
+for i in range(3):
+    ax = axs.flat[i]
+    ax.grid(True, 'major', 'y') # grid so no eixo y
+    ax.set_axisbelow(True) # faz o grid ir para tras dos elementos
+    ax.tick_params(axis='x', labelsize=15)
+    ax.set_title(chaves[i*3].split(' ')[0].replace('C', " °C"), fontsize=20)
+    if i == 0:
+        ax.set_ylabel("$V_a$ (V)", fontsize=15)
+        ax.tick_params(axis='y', labelsize=15)
+    elif i > 0:
+        ax.set_yticklabels([])
+    if i == 1:
+        ax.set_xlabel("$n$ pico", fontsize=15)
+    #for j in range(3):
+        
+fig.subplots_adjust(left=0.1, right=0.99, bottom=0.13, top=0.92, wspace=0, hspace=0)
+plt.show()
+
+
+## plot metodos 1 e 2
+#fig, axs = plt.subplots(1,3,figsize=(9,5))
+#for count, i in enumerate([0,3,6]):
+    #ax = axs.flat[count]
+    #ax.grid(True, 'major', 'y') # grid so no eixo y
+    #ax.set_axisbelow(True) # faz o grid ir para tras dos elementos
+    #ax.set_title(chaves[i].split(' ')[0].replace('C', " °C"), fontsize=20)
+    ax.set_ylim(0.07,0.475)
+    ax.set_xlim(0,45)
+    #ax.tick_params(axis='x', labelsize=15)
+    if count == 0:
+        ax.set_ylabel("$I_e$ (A)", fontsize=15)
+        ax.tick_params(axis='y', labelsize=15)
+    elif count > 0:
+        ax.set_yticklabels([])
+    if count == 1:
+        ax.set_xlabel("$V_a$ (V)", fontsize=15)
+    # cada serie:
+    for j in [0,1,2]:
+        dados_temporario = dados_d1[chaves[i+j]]
+        # pontos
+        if j == 0:
+            label = "$V_r =$ 0.5V"
+        elif j == 1:
+            label = "$V_r =$ 1.5V"
+        else:
+            label = "$V_r =$ 2.5V"
+        x = dados_temporario.iloc[:,0]
+        y = dados_temporario.iloc[:,1]
+        ax.scatter(x, y, s=6, label=label)
+        # picos (metodo 1)
+        pontos_metodo1_x = [ponto for ponto in picos_metodo1[chaves[i+j]]]
+        linhas_metodo1 = [min(dados_temporario.iloc[:,0], key=lambda x:abs(ponto-x)) for ponto in pontos_metodo1_x]
+        pontos_metodo1_y = [dados_temporario[dados_temporario.iloc[:,0] == linha] for linha in linhas_metodo1]
+        pontos_metodo1_y = pd.concat(pontos_metodo1_y)
+        pontos_metodo1_y.columns = ['a', 'b', 'c']
+        pontos_metodo1_y = pontos_metodo1_y.drop_duplicates(subset='a')
+        pontos_metodo1_y = pontos_metodo1_y.iloc[:,1]
+        if (i+j == 8):
+            ax.plot([1,2], [1,2], color="black", label="Gauss Método 2") # placeholder para aparecer legenda do método 2
+            ax.scatter(pontos_metodo1_x, pontos_metodo1_y, marker='+', color='darkviolet', s=200, label="Picos Método 1")
+        else:
+            ax.scatter(pontos_metodo1_x, pontos_metodo1_y, marker='+', color='darkviolet', s=200)
+        if count == 2:
+            ax.legend(fontsize=12, markerscale=1, borderpad=0.3, framealpha=0.95)
+        # gaussianas (metodo 2)
+        for k in range(len(picos_metodo2[chaves[i+j]])):
+            pico = picos_metodo2[chaves[i+j]][k]
+            escopo_de_plot = dados_temporario[(dados_temporario.iloc[:,0] > pico - 2.5) & (dados_temporario.iloc[:,0] < pico + 2.5)].iloc[:,0]
+            betas = lista_ajustes_gaussianos[i+j][k][0]
+            ax.plot(escopo_de_plot, auxiliar.gaussiana(betas, escopo_de_plot), color="black", linewidth=1)   
+fig.subplots_adjust(left=0.1, right=0.99, bottom=0.13, top=0.92, wspace=0, hspace=0)
+#plt.show()
+plt.savefig("sintese/resultados-dia1.svg", format="svg")
+
+
+
+
+
+
+
+
+
+
+
 
 
 
