@@ -1,14 +1,14 @@
 import os
 import pandas as pd
 from matplotlib import pyplot as plt
-import auxiliar
+os.chdir("exp 3 - franck-hertz")
+from sintese import auxiliar
 
 ### DIA 1
 
 ## importando dados:
 
 # caminho dos dados
-os.chdir("exp 3 - franck-hertz")
 diretorio_d1 = "dados brutos/dia 1/"
 caminhos_d1 = os.listdir(diretorio_d1)
 
@@ -222,7 +222,7 @@ for i in range(3):
     ax.set_yticks(range(0,41,5))
     ax.set_xticks(range(1,9))
     ax.grid(True, 'major', 'y') # grid so no eixo y
-fig.subplots_adjust(left=0.1, right=0.99, bottom=0.16, top=0.91, wspace=0, hspace=0)
+fig.subplots_adjust(left=0.08, right=0.99, bottom=0.16, top=0.91, wspace=0, hspace=0)
 #plt.show()
 plt.savefig("sintese/ajuste-linear-dia1.svg", format="svg")
 
