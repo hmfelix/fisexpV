@@ -46,3 +46,29 @@ def media_medias(coluna_resultados): # coluna_resultados a coluna de interesse, 
 # funcao para propagar o erro da media de medias quando as incertezas sao diferentes entre as medias
 def erro_media_medias(coluna_erros): # coluna_erros a coluna com as incertezas das medias de interesse, com um resultado para cada par (V_r, T)
     return [np.sqrt(np.sum(np.square(coluna_erros[i:(i+3)]))) for i in [0,3,6]]
+
+# variavel contendo os picos identificados no olhometro
+picos_olhometro = {
+    "180C - 0.5V": [12.0, 16.375, 21.16, 26.14, 31.05, 36.09, 41.2],
+    "180C - 1.5V": [12.34, 16.62, 21.3, 26.05, 30.92, 35.83, 40.868],
+    "180C - 2.5V": [12.65, 16.94, 21.52, 26.37, 31.27, 36.1, 41.09],
+    "190C - 0.5V": [17.34, 21.58, 26.355, 31.14, 35.976, 40.932],
+    "190C - 1.5V": [12.83, 17.08, 21.533, 26.194, 30.845, 35.769, 40.555],
+    "190C - 2.5V": [12.87, 17.39, 21.844, 26.57, 31.184, 36.048, 40.87],
+    "200C - 0.5V": [17.58, 22.15, 26.8, 31.466, 36.098, 40.945],
+    "200C - 1.5V": [17.54, 21.91, 26.455, 31.11, 35.822, 40.614],
+    "200C - 2.5V": [17.51, 22.09, 26.91, 31.47, 36.16, 41.06]
+}
+
+# funcao que pega um ponto no continuo e retorna
+# o argumento mais proximo num dominio discreto
+def pegar_ponto(serie, ponto):
+    # serie eh uma lista ou vetor
+    # ponto eh o ponto para o qual queremos achar o mais poximo
+    return min(serie, key=lambda x: abs(ponto-x))
+
+# funcao que pega um ponto da serie
+# e retorna o indice desse ponto
+def pegar_indice(serie, ponto):
+    return np.argmax([ponto == j for j in serie])
+    
