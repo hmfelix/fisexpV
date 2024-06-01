@@ -26,11 +26,11 @@ for i in range(len(dados_d1)):
     picos_estimados_V_A = []
     picos_estimados_corrente = []
     erros_V_A = []
-    I_infs = []
-    I_sups = []
+    V_A_infs = []
+    V_A_sups = []
     for pico in auxiliar.picos_olhometro[chaves[i]]:
         pico_no_dominio = auxiliar.pegar_ponto(V_A, pico)
-        sup_corte_1 = auxiliar.pegar_ponto(V_A, pico_no_dominio + 3)
+        sup_corte_1 = auxiliar.pegar_ponto(V_A, pico_no_dominio + 2.75)
         indice_pico = auxiliar.pegar_indice(V_A, pico_no_dominio)
         indice_sup_corte_1 = auxiliar.pegar_indice(V_A, sup_corte_1)
         corte_1 = df.iloc[indice_pico:indice_sup_corte_1]
@@ -44,20 +44,20 @@ for i in range(len(dados_d1)):
         indice_pico_estimado_corrente = auxiliar.pegar_indice(V_A, auxiliar.pegar_ponto(V_A, pico_estimado_V_A))
         pico_estimado_corrente = df.iloc[:,1][indice_pico_estimado_corrente]
         erro_V_A = (V_A[indice_half_max_direita] - V_A[indice_half_max_esquerda]) / 2
-        I_inf = df.iloc[:,1][indice_half_max_esquerda]
-        I_sup = df.iloc[:,1][indice_half_max_direita]
+        V_A_inf = V_A[indice_half_max_esquerda]
+        V_A_sup = V_A[indice_half_max_direita]
         # registro:
         picos_estimados_V_A.append(pico_estimado_V_A)
         picos_estimados_corrente.append(pico_estimado_corrente)
         erros_V_A.append(erro_V_A)
-        I_infs.append(I_inf)
-        I_sups.append(I_sup)
+        V_A_infs.append(V_A_inf)
+        V_A_sups.append(V_A_sup)
     resultados = {
         "V_A": picos_estimados_V_A,
         "I": picos_estimados_corrente,
         "Erro V_A": erros_V_A,
-        "I_inf": I_sups,
-        "I_sup": I_infs
+        "V_A_inf": V_A_infs,
+        "V_A_sup": V_A_sups
     }
     picos_metodo1[chaves[i]] = resultados
     
@@ -66,7 +66,7 @@ for i in range(len(dados_d1)):
 #    print(picos_metodo1[chaves[i]], '\n')
 
 # exportando:
-caminho_exportacao = "resultados/dia1/metodo1.json"
+caminho_exportacao = "resultados/dia1/picos-metodo1.json"
 with open(caminho_exportacao, 'w') as arquivo:
     json.dump(picos_metodo1, arquivo)
 

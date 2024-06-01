@@ -2,6 +2,7 @@ import numpy as np
 import scipy.odr as odr
 import pandas as pd
 import os
+from scipy.optimize import curve_fit
 
 # funcao para modelo gaussiano
 def gaussiana(B, x):
@@ -45,7 +46,7 @@ def media_medias(coluna_resultados): # coluna_resultados a coluna de interesse, 
 
 # funcao para propagar o erro da media de medias quando as incertezas sao diferentes entre as medias
 def erro_media_medias(coluna_erros): # coluna_erros a coluna com as incertezas das medias de interesse, com um resultado para cada par (V_r, T)
-    return [np.sqrt(np.sum(np.square(coluna_erros[i:(i+3)]))) for i in [0,3,6]]
+    return [np.sqrt(np.sum(np.square(coluna_erros[i:(i+3)])))/3 for i in [0,3,6]]
 
 # variavel contendo os picos identificados no olhometro
 picos_olhometro = {
@@ -71,4 +72,35 @@ def pegar_ponto(serie, ponto):
 # e retorna o indice desse ponto
 def pegar_indice(serie, ponto):
     return np.argmax([ponto == j for j in serie])
+
+# funcao para calcular o potencial de excitacao pelo metodo das diferencas
+def diff(serie):
+    return [serie[i+1] - serie[i] for i in range(len(serie)-1)]
+
+# funcao para propagar erro do metodo das diferencas
+def erro_diff(serie):
+    return [np.sqrt(serie[i+1]**2 + serie[i]**2) for i in range(len(serie)-1)]
+
+# funcao para calcular erro da media por propagacao
+def erro_media(serie):
+    return np.sqrt((np.square([i/len(serie) for i in serie])).sum())
+
+def identificar_n_pico(pico):
+    if pico < 15:
+        return 3
+    if pico < 20:
+        return 4
+    else:
+        return 5
     
+
+# ajuste linear
+def linear(x, a, b):
+    return a*x + b
+def encaixar_linear(dados):
+    # dados eh dataframe no formato x, y, erro_y
+    popt, pcov = curve_fit(linear, dados.iloc[:,0], dados.iloc[:,1], sigma=dados.iloc[:,2])
+    return pd.DataFrame({
+        "parametros": [popt[0], popt[1]],
+        "erros": [np.sqrt(pcov[0,0]), np.sqrt(pcov[1,1])]
+    })
