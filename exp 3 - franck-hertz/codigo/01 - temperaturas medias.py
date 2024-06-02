@@ -10,11 +10,12 @@ dados_d1, chaves = auxiliar.importar_dados_d1()
 # temperaturas medias e erro de cada tensão de retardo e faixa de temperatura
 temp_media_d1 = [dados_d1[df].iloc[:,2].mean() for df in dados_d1]
 desv_pad_temp_media_d1 = [dados_d1[df].iloc[:,2].std() for df in dados_d1]
-temperaturas_d1 = pd.DataFrame({"T_med": temp_media_d1, "T_med_desvpad": desv_pad_temp_media_d1})
+desv_pad_da_media_temp_media_d1 =[desv_pad_temp_media_d1[i] / np.sqrt(len(dados_d1[chaves[i]])) for i in range(9)]
+temperaturas_d1 = pd.DataFrame({"T_med": temp_media_d1, "T_med_desvpad_da_media": desv_pad_da_media_temp_media_d1})
 
 # medias de medias e respectivas incertezas
 temp_media_media_d1 = auxiliar.media_medias(temp_media_d1)
-erro_temp_media_media_d1 = auxiliar.erro_media_medias(desv_pad_temp_media_d1)
+erro_temp_media_media_d1 = auxiliar.erro_media_medias(desv_pad_da_media_temp_media_d1)
 temperaturas_media_medias_d1 = pd.DataFrame({"T_med_med": temp_media_media_d1, "T_med_med_erro": erro_temp_media_media_d1})
 
 

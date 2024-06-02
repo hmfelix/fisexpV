@@ -28,6 +28,8 @@ for i in range(len(dados_d1)):
     erros_V_A = []
     V_A_infs = []
     V_A_sups = []
+    I_infs = []
+    I_sups = []
     for pico in auxiliar.picos_olhometro[chaves[i]]:
         pico_no_dominio = auxiliar.pegar_ponto(V_A, pico)
         sup_corte_1 = auxiliar.pegar_ponto(V_A, pico_no_dominio + 2.75)
@@ -46,18 +48,24 @@ for i in range(len(dados_d1)):
         erro_V_A = (V_A[indice_half_max_direita] - V_A[indice_half_max_esquerda]) / 2
         V_A_inf = V_A[indice_half_max_esquerda]
         V_A_sup = V_A[indice_half_max_direita]
+        I_inf = df.iloc[indice_half_max_esquerda,1]
+        I_sup = df.iloc[indice_half_max_direita,1]
         # registro:
         picos_estimados_V_A.append(pico_estimado_V_A)
         picos_estimados_corrente.append(pico_estimado_corrente)
         erros_V_A.append(erro_V_A)
         V_A_infs.append(V_A_inf)
         V_A_sups.append(V_A_sup)
+        I_infs.append(I_inf)
+        I_sups.append(I_sup)
     resultados = {
         "V_A": picos_estimados_V_A,
         "I": picos_estimados_corrente,
         "Erro V_A": erros_V_A,
         "V_A_inf": V_A_infs,
-        "V_A_sup": V_A_sups
+        "V_A_sup": V_A_sups,
+        "I_inf": I_infs,
+        "I_sup": I_sups
     }
     picos_metodo1[chaves[i]] = resultados
     

@@ -90,8 +90,10 @@ def identificar_n_pico(pico):
         return 3
     if pico < 20:
         return 4
-    else:
+    if pico < 25:
         return 5
+    if pico < 30:
+        return 6
     
 
 # ajuste linear
