@@ -36,7 +36,7 @@ def importar_dados_d1():
     diretorio_d1 = "dados brutos/dia 1/"
     caminhos_d1 = os.listdir(diretorio_d1)
     # importacao em um dicionario
-    dados_d1 = {caminho.replace(".tsv", ''): pd.read_csv(diretorio_d1 + caminho, sep='\t') for caminho in caminhos_d1}
+    dados_d1 = {caminho.replace(".tsv", ''): pd.read_csv(diretorio_d1 + caminho, sep='\t', header=None) for caminho in caminhos_d1}
     chaves = list(dados_d1.keys())
     return (dados_d1, chaves)
 
@@ -95,7 +95,6 @@ def identificar_n_pico(pico):
     if pico < 30:
         return 6
     
-
 # ajuste linear
 def linear(x, a, b):
     return a*x + b
