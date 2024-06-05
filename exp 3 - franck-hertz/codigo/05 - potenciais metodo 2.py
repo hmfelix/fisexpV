@@ -146,6 +146,16 @@ potenciais_metodo2_final = {
 
 
 
+# Pressupondo que potenciais_metodo1_final esta carregado:
+U_E_final = (potenciais_metodo1_final["U_E"] + potenciais_metodo2_final["U_E"])/2
+U_E_final_erro = auxiliar.erro_media([potenciais_metodo1_final["Erro U_E"], potenciais_metodo2_final["Erro U_E"]])
+U_C_final = (potenciais_metodo1_final["U_C"] + potenciais_metodo2_final["U_C"])/2
+U_C_final_erro = auxiliar.erro_media([potenciais_metodo1_final["Erro U_C"], potenciais_metodo2_final["Erro U_C"]])
 
-picos_metodo2[chaves[6]]
-
+final_dia1 = pd.DataFrame({
+    "U_E": [U_E_final],
+    "Erro U_E": [U_E_final_erro],
+    "U_C": [U_C_final],
+    "Erro U_C": [U_C_final_erro]
+})
+final_dia1
